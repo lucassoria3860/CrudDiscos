@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import net.cfl.crudDiscos.dto.DiscoDto;
 import net.cfl.crudDiscos.entidad.Discos;
+import net.cfl.crudDiscos.exepciones.RecursoNoEncontrado;
 import net.cfl.crudDiscos.mapper.DiscoMapper;
 import net.cfl.crudDiscos.repositorio.DiscoRepositorio;
 import net.cfl.crudDiscos.servicios.DiscoServicio;
@@ -21,6 +22,16 @@ public class DiscoServicioImp implements DiscoServicio{
 		//El metodo .save() de JPA guarda los datos en la base de datos
 		Discos discoGuardado = discoRepositorio.save(disco);
 		return DiscoMapper.mapToDiscoDto(discoGuardado);
+	}
+
+	@Override
+	public DiscoDto consultaDiscoPorId(Long discoId) {
+		//El metodo .findById() develve los datos 
+		//contenido en la entidad en donde coincida
+		//el ID
+		Discos disco = discoRepositorio.findById(discoId)
+										.orElseThrow(() -> new RecursoNoEncontrado ("El disco no existe" + discoId));
+		return DiscoMapper.mapToDiscoDto(disco);
 	}
 
 }

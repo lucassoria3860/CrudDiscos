@@ -8,7 +8,7 @@ public interface DiscoServicio {
 	
 	DiscoDto crearDisco(DiscoDto discoDto);
 	
-	
+	DiscoDto consultaDiscoPorId(Long discoId);
 	
 	
 	
