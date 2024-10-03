@@ -1,5 +1,8 @@
 package net.cfl.crudDiscos.servicios.imp;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -34,4 +37,16 @@ public class DiscoServicioImp implements DiscoServicio{
 		return DiscoMapper.mapToDiscoDto(disco);
 	}
 
+	@Override
+	public List<DiscoDto> consultaTodosLosDiscos() {
+		List<Discos> discos = discoRepositorio.findAll();
+		return discos.stream().
+						map((disco)-> DiscoMapper.mapToDiscoDto(disco)).
+									collect(Collectors.toList());
+	}
+	
+	
+	
+
 }
+

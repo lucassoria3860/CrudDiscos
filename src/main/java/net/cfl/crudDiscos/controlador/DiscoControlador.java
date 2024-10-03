@@ -1,5 +1,7 @@
 package net.cfl.crudDiscos.controlador;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,17 @@ public class DiscoControlador {
 	
 	@GetMapping({"id"})
 	//REST API: Consulta discos por Id
-	public ResponseEntity<DiscoDto> ConsultaDiscoPorId(@PathVariable("id") Long discoId){
+	public ResponseEntity<DiscoDto> consultaDiscoPorId(@PathVariable("id") Long discoId){
 		DiscoDto discoDto = discoServicio.consultaDiscoPorId(discoId);
 		return ResponseEntity.ok(discoDto);
 	}
+	
+	@GetMapping
+	//REST API: consulta todos los discos
+	public ResponseEntity<List<DiscoDto>> consultaTodosLosDiscos(){
+		List<DiscoDto> discos = discoServicio.consultaTodosLosDiscos();
+		return ResponseEntity.ok(discos);
+	}
+	
+	
 }
