@@ -14,6 +14,8 @@ public interface DiscoServicio {
 	
 	List<DiscoDto> consultaTodosLosDiscos();
 	
+	DiscoDto actualizaDisco(Long discoId, DiscoDto discoActualizado);
+	
 	
 	
 }

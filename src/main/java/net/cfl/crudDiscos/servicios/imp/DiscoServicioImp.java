@@ -44,6 +44,21 @@ public class DiscoServicioImp implements DiscoServicio{
 						map((disco)-> DiscoMapper.mapToDiscoDto(disco)).
 									collect(Collectors.toList());
 	}
+
+	@Override
+	public DiscoDto actualizaDisco(Long discoId, DiscoDto discoActualizado) {
+		Discos disco = discoRepositorio.findById(discoId).
+											orElseThrow(() -> new RecursoNoEncontrado("El disco no existe" + discoId));
+		
+		disco.setArtista(discoActualizado.getArtista());
+		disco.setTitulo(discoActualizado.getTitulo());
+		disco.setDuracion(discoActualizado.getDuracion());
+		disco.setCod(discoActualizado.getCod());
+		
+		Discos discoActualizadoObj = discoRepositorio.save(disco);
+		
+		return DiscoMapper.mapToDiscoDto(discoActualizadoObj);
+	}
 	
 	
 	
