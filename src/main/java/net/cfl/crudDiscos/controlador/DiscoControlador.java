@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,9 @@ import net.cfl.crudDiscos.dto.DiscoDto;
 import net.cfl.crudDiscos.servicios.DiscoServicio;
 
 @CrossOrigin("*")
-@RestController //Establece la clase como un controlador
 @AllArgsConstructor
-@RequestMapping("./api/discos")
+@RestController //Establece la clase como un controlador
+@RequestMapping("/api/discos")
 public class DiscoControlador {
 	
 	private DiscoServicio discoServicio;
@@ -32,7 +33,7 @@ public class DiscoControlador {
 		return new ResponseEntity<>(discoGuardado, HttpStatus.CREATED) ;
 	}
 	
-	@GetMapping({"id"})
+	@GetMapping("{id}")
 	//REST API: Consulta discos por Id
 	public ResponseEntity<DiscoDto> consultaDiscoPorId(@PathVariable("id") Long discoId){
 		DiscoDto discoDto = discoServicio.consultaDiscoPorId(discoId);
@@ -47,15 +48,20 @@ public class DiscoControlador {
 	}
 	
 	@PutMapping("{id}")
+	//REST API: actualiza Disco
 	public ResponseEntity<DiscoDto> actualizaDisco(@RequestBody DiscoDto discoActualizado, 
-																@PathVariable Long discoId){
-		
+																@PathVariable("id") Long discoId){	
 		DiscoDto discoDto = discoServicio.actualizaDisco(discoId, discoActualizado);
 		
 		return ResponseEntity.ok(discoDto);
 	}
 	
-	
+	@DeleteMapping("{id}")
+	//REST API: Borra el disco
+	public ResponseEntity<String> borrarDisco(@PathVariable("id") Long discoId){
+		discoServicio.borraDisco(discoId);
+		return ResponseEntity.ok("El disco se borro correctamente");
+	}
 	
 	
 	

@@ -33,12 +33,14 @@ public class DiscoServicioImp implements DiscoServicio{
 		//contenido en la entidad en donde coincida
 		//el ID
 		Discos disco = discoRepositorio.findById(discoId)
-										.orElseThrow(() -> new RecursoNoEncontrado ("El disco no existe" + discoId));
+										.orElseThrow(() -> new RecursoNoEncontrado ("El disco no existe " + discoId));
 		return DiscoMapper.mapToDiscoDto(disco);
 	}
 
 	@Override
 	public List<DiscoDto> consultaTodosLosDiscos() {
+		//el metodo .findAll devuelve una LIST de todos los datos contenidos
+		//en la base de datos;
 		List<Discos> discos = discoRepositorio.findAll();
 		return discos.stream().
 						map((disco)-> DiscoMapper.mapToDiscoDto(disco)).
@@ -48,7 +50,7 @@ public class DiscoServicioImp implements DiscoServicio{
 	@Override
 	public DiscoDto actualizaDisco(Long discoId, DiscoDto discoActualizado) {
 		Discos disco = discoRepositorio.findById(discoId).
-											orElseThrow(() -> new RecursoNoEncontrado("El disco no existe" + discoId));
+											orElseThrow(() -> new RecursoNoEncontrado("El disco no existe " + discoId));
 		
 		disco.setArtista(discoActualizado.getArtista());
 		disco.setTitulo(discoActualizado.getTitulo());
@@ -58,6 +60,14 @@ public class DiscoServicioImp implements DiscoServicio{
 		Discos discoActualizadoObj = discoRepositorio.save(disco);
 		
 		return DiscoMapper.mapToDiscoDto(discoActualizadoObj);
+	}
+
+	@Override
+	public void borraDisco(Long discoId) {
+		Discos disco = discoRepositorio.findById(discoId)
+										.orElseThrow(() -> new RecursoNoEncontrado ("El disco no existe " + discoId));
+		discoRepositorio.deleteById(discoId);
+		
 	}
 	
 	
